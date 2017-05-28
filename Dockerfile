@@ -107,7 +107,7 @@ RUN set -e \
 
 EXPOSE 8080
 VOLUME /usr/local/tomcat/webapps/
-COPY template-1.0.war /usr/local/tomcat/webapps/
+COPY template-1.0.war /usr/local/tomcat/webapps/template.war
 CMD ["catalina.sh", "run"]
 
 
