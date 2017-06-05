@@ -106,6 +106,10 @@ RUN set -e \
 	fi
 
 EXPOSE 8080
+RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+RUN add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.utexas.edu/mariadb/repo/10.1/ubuntu xenial main
+RUN apt-get update && apt-get install mariadb -y
+
 VOLUME /usr/local/tomcat/webapps/
 COPY template-1.0.war /usr/local/tomcat/webapps/template.war
 CMD ["catalina.sh", "run"]
