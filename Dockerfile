@@ -111,6 +111,14 @@ RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24
 RUN add-apt-repository 'deb [arch=amd64,i386] http://ftp.utexas.edu/mariadb/repo/10.1/ubuntu xenial main'
 RUN apt-get update && apt-get install mariadb-client iputils-ping telnet wget curl ftp vim -y
 
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    echo 'LANG="en_US.UTF-8"'>/etc/default/locale && \
+    dpkg-reconfigure --frontend=noninteractive locales && \
+    update-locale LANG=en_US.UTF-8
+
+ENV LANG en_US.UTF-8
+RUN locale-gen $LANG
+
 VOLUME /usr/local/tomcat/webapps/
 COPY template-1.0.war /usr/local/tomcat/webapps/template.war
 CMD ["catalina.sh", "run"]
