@@ -43,12 +43,14 @@ RUN set -ex; \
 	done
 
 ENV TOMCAT_MAJOR 8
-ENV TOMCAT_VERSION 8.5.15
+ENV TOMCAT_VERSION 8.5.16
 
 # https://issues.apache.org/jira/browse/INFRA-8753?focusedCommentId=14735394#comment-14735394
-ENV TOMCAT_TGZ_URL https://www.apache.org/dyn/closer.cgi?action=download&filename=tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
+#ENV TOMCAT_TGZ_URL https://www.apache.org/dyn/closer.cgi?action=download&filename=tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
+ENV http://ftp.unicamp.br/pub/apache/tomcat/tomcat-8/v8.5.16/bin/apache-tomcat-8.5.16.tar.gz
+
 # not all the mirrors actually carry the .asc files :'(
-ENV TOMCAT_ASC_URL https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz.asc
+#ENV TOMCAT_ASC_URL https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz.asc
 
 RUN set -x \
 	\
@@ -58,7 +60,7 @@ RUN set -x \
 		openssl \
 	&& wget -O tomcat.tar.gz "$TOMCAT_TGZ_URL" \
 	&& wget -O tomcat.tar.gz.asc "$TOMCAT_ASC_URL" \
-	&& gpg --batch --verify tomcat.tar.gz.asc tomcat.tar.gz \
+#	&& gpg --batch --verify tomcat.tar.gz.asc tomcat.tar.gz \
 	&& tar -xvf tomcat.tar.gz --strip-components=1 \
 	&& rm bin/*.bat \
 	&& rm tomcat.tar.gz* \
